@@ -30,7 +30,7 @@ def login():
 
 
 @app.errorhandler(404)
-def pageNotFound():
+def pageNotFound(error):
     return render_template('page_not_found.html'), 404
 
 if __name__ == "__main__":
