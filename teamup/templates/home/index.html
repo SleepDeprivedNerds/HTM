@@ -6,6 +6,7 @@
 									<header class="major">
 										<h2>Welcome to Tea'mup!</h2>
 									</header>
+									<div id="error"></div>
 									<div id="googleMap" style="width:100%;height:400px;"></div>
 
                                     <a href="/create" class="button alt">Start a Tea'mup</a>
@@ -22,6 +23,21 @@
 
     </div>
     <script>
+
+    var x = document.getElementById("error");
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+	func
+    alert( "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude);
+
+
+
     function myMap() {
     var mapProp= {
         center:new google.maps.LatLng(51.508742,-0.120850),
@@ -29,7 +45,7 @@
     };
     var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
     var marker = new google.maps.Marker({
-      icon:"https://cdn.iconscout.com/icon/premium/png-256-thumb/coffee-mug-hot-drink-cup-55888.png",
+      icon:"images/favicon.png",
       map:map,
         position:new google.maps.LatLng(51.508742,-0.120850),
         animation:google.maps.Animation.DROP
