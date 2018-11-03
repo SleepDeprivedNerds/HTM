@@ -23,7 +23,7 @@
 
     </div>
     <script>
-
+	navigator.geolocation.getCurrentPosition();
     var x = document.getElementById("error");
 
     if (navigator.geolocation) {
@@ -32,9 +32,10 @@
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 
-	func
-    alert( "Latitude: " + position.coords.latitude +
-    "<br>Longitude: " + position.coords.longitude);
+	function showPosition()
+	{
+    alert( "Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude);
+    }
 
 
 

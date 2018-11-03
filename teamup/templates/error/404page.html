@@ -1,0 +1,12 @@
+{% extends "index.html" -%}
+{% block content -%}
+<h1> We are very sorry but we could not find the page you were looking for! </h1>
+<button onclick="goBack()">Go Back</button>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+{%- endblock content %}
+

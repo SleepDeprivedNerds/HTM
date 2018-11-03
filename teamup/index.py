@@ -59,8 +59,12 @@ def login():
 
 @app.errorhandler(404)
 def pageNotFound(error):
-    return render_template('page_not_found.html'), 404
+    return render_template('error/404page.html'), 404
+
+@app.errorhandler(500)
+def pageNotFound(error):
+    return render_template('error/500page.html'), 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
