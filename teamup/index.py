@@ -1,4 +1,4 @@
-from flask import Flask , render_template
+from flask import Flask , render_template, send_from_directory
 app = Flask(__name__)
 
 @app.route("/")
@@ -8,6 +8,24 @@ def index():
 @app.route("/find")
 def find():
     return "Find a tea place"
+
+@app.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('js', path)
+
+@app.route('/fonts/<path:path>')
+def send_font(path):
+    return send_from_directory('fonts', path)
+
+
+@app.route('/images/<path:path>')
+def send_images(path):
+    return send_from_directory('images', path)
+
+
+@app.route('/css/<path:path>')
+def send_css(path):
+    return send_from_directory('css', path)
 
 
 @app.route("/create")
