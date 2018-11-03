@@ -1,6 +1,15 @@
 from flask import Flask , render_template, send_from_directory, redirect, url_for
+from flaskext.mysql import MySQL
+
 
 app = Flask(__name__)
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'htm_teamup'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+cursor = mysql.get_db().cursor()
 
 
 @app.route("/")
