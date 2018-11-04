@@ -1,0 +1,20 @@
+{% extends "index.html" -%}
+{% block content -%}
+                <section>
+                    <header class="major">
+                        <h2>Start a local Tea'mup</h2>
+
+                    </header>
+                    // Todo bunch of shit
+                    <form method="post" action="create/sendData" >
+                        Location <input name="Location" type="text"> <br/>
+                        Time<input name="Time" type="time"><br/>
+                        Description <textarea name="Description"><br/>
+                        <input type="submit" value="create"/>
+                    </form>
+                    <a href="next.html" class="button alt">Next</a>
+                </section>
+
+
+{%- endblock content %}
+

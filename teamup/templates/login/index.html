@@ -1,0 +1,9 @@
+{% extends "index.html" -%}
+{% block content -%}
+<!--TODO figure out wtf needs to go here!-->
+<form method="post" action="login/sendData">
+Username: <input type="text" name="username"><br/>
+Password <input type="password" name="password"><br/>
+<input type="submit" value="Log in"/>
+</form>
+{%- endblock content %}

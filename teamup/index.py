@@ -1,5 +1,6 @@
-from flask import Flask , render_template, send_from_directory, redirect, url_for
 from flaskext.mysql import MySQL
+from flask import Flask , render_template, send_from_directory, redirect, url_for , jsonify, request, session
+
 
 
 app = Flask(__name__)
@@ -9,16 +10,18 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_DB'] = 'htm_teamup'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
-cursor = mysql.get_db().cursor()
+app.secret_key = b'secret key'
+#cursor = mysql.get_db().cursor()
 
 
 @app.route("/")
 def index():
-    return render_template("home/index.html", name="dsad")
+    return render_template("home/index.html")
 
 
 @app.route("/find")
 def find():
+    session['create']=False
     return "Find a tea place"
 
 @app.route('/js/<path:path>')
@@ -42,6 +45,7 @@ def send_css(path):
 
 @app.route("/create")
 def createEvent():
+    session['create']=True
     return "Create a Tea event"
 
 
@@ -63,7 +67,7 @@ def viewEvent(ident=None):
 
 @app.route("/login")
 def login():
-    return "Login"
+    return render_template("login/index.html")
 
 
 @app.errorhandler(404)
@@ -73,6 +77,36 @@ def pageNotFound(error):
 @app.errorhandler(500)
 def pageNotFound(error):
     return render_template('error/500page.html'), 500
+
+#Form for create page thing
+@app.route("/create/sendData",methods=["POST"])
+def createForm():
+   session['event'] = (request.form["location"],request.form["time"],request.form["description"])
+   redirect(url_for(login))
+
+#Create a post thing magic
+@app.route("/login/sendData",methods=["POST"])
+def checkLogin():
+    # SQL check
+    conn = mysql.connect()
+    cursors = conn.cursor()
+    auth = cursors.execute("Select * from user where password='"+request.form["password"]+"' and  username='" + request.form["username"]+"'")
+
+    if (int(auth) == 1):
+        session['auth'] = True
+        if (session['create'] == True):
+            write = cursors.execute("Insert into event (location,time,description) values("+session['event'][0]+"," +session['event'][1]+"," +session['event'][2])
+            id = cursors.execute("Select id from event where location = {}".format(session['event'][0]))
+            session['eventID'] = id
+            #link to create page
+            return redirect(url_for('create'))
+        else:
+
+            return redirect(url_for('viewEvent',session['event']))
+
+    else:
+        session['auth']=False
+
 
 
 if __name__ == "__main__":
